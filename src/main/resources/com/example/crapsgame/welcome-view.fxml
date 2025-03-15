@@ -7,18 +7,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" spacing="10.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.crapsgame.controllers.HelloFPOEController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" spacing="10.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.crapsgame.controllers.WelcomeController">
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
             <ImageView fx:id="imageView" fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </HBox>
-      <TextField fx:id="nicknameTextField" alignment="CENTER" onKeyPressed="#onKeyPressedNicknameTexField" onKeyReleased="#onKeyReleasedNicknameTexField">
+      <TextField fx:id="nicknameTextField" alignment="CENTER">
          <VBox.margin>
             <Insets left="10.0" right="10.0" />
          </VBox.margin>
       </TextField>
-      <Button mnemonicParsing="false" onAction="#onActionFPOEButton" text="Hola FPOE" />
+      <Button mnemonicParsing="false" onAction="#onActionStartButton" text="Start" />
    </children>
 </VBox>

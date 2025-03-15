@@ -1,5 +1,6 @@
 package com.example.crapsgame;
 
+import com.example.crapsgame.views.WelcomeView;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,11 +17,8 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.show();
+        WelcomeView welcomeView = WelcomeView.getInstance();
+        welcomeView.show();
 
         /*
         Button button = new Button("Event Test");
