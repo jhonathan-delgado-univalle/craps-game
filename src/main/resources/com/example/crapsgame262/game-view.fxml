@@ -39,7 +39,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
          <children>
-            <TextArea maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="80.0" prefWidth="500.0" />
+            <TextArea fx:id="messageTextArea" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="80.0" prefWidth="500.0" wrapText="true" />
          </children>
       </HBox>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" GridPane.rowIndex="1">
@@ -55,7 +55,7 @@
                   <ImageView fx:id="dice2ImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onMouseClicked="#onMouseClickedDropButton" text="Lanzar" />
+            <Button fx:id="dropButton" mnemonicParsing="false" onMouseClicked="#onMouseClickedDropButton" text="Lanzar" />
          </children>
       </VBox>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -78,6 +78,8 @@
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="Tiro:">
@@ -90,7 +92,17 @@
                         <Insets right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label style="-fx-border-color: black;" text="00" GridPane.columnIndex="1">
+                  <Label text="Juegos ganados:" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets right="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Juegos perdidos:" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets right="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="tiroLabel" style="-fx-border-color: black;" text="--" GridPane.columnIndex="1">
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
@@ -98,7 +110,23 @@
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label style="-fx-border-color: black;" text="00" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="puntoLabel" style="-fx-border-color: black;" text="--" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="wonGamesLabel" style="-fx-border-color: black;" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lostGamesLabel" style="-fx-border-color: black;" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
