@@ -39,7 +39,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
          <children>
-            <TextArea maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="80.0" prefWidth="500.0" />
+            <TextArea fx:id="summaryTextArea" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="80.0" prefWidth="500.0" />
          </children>
       </HBox>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" GridPane.rowIndex="1">
@@ -90,7 +90,7 @@
                         <Insets right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label style="-fx-border-color: black;" text="00" GridPane.columnIndex="1">
+                  <Label fx:id="dropLabel" style="-fx-border-color: black;" text="00" GridPane.columnIndex="1">
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
@@ -98,7 +98,7 @@
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label style="-fx-border-color: black;" text="00" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="pointLabel" style="-fx-border-color: black;" text="00" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
