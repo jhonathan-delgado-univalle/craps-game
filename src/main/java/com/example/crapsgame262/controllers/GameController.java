@@ -11,21 +11,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
- * Controller for the Craps game view.
- *
- * <p>It rolls both dice, delegates the rules to {@link Game} and reflects the
- * state of the match (last roll, point, won games and lost games) in the
- * view.</p>
+ * Controller class for the Craps game view.
+ * Handles user interactions and updates the UI based on game logic.
  */
 public class GameController {
 
-    /** Text shown when there is no value to display yet. */
-    private static final String EMPTY_VALUE = "--";
-
-    /** Model that holds the point and the win/loss counters. */
-    private final Game game = new Game();
-
     private Player currentPlayer;
+
+    /**
+     * Game model instance that handles the Craps logic.
+     */
+    private Game game;
 
     @FXML
     private ImageView dice1ImageView;
@@ -36,23 +32,35 @@ public class GameController {
     @FXML
     private Label nicknameLabel;
 
+    /**
+     * Label used to display the current dice roll sum.
+     */
     @FXML
-    private Label tiroLabel;
-
-    @FXML
-    private Label puntoLabel;
-
-    @FXML
-    private Label wonGamesLabel;
-
-    @FXML
-    private Label lostGamesLabel;
-
-    @FXML
-    private TextArea messageTextArea;
+    private Label dropLabel;
 
     /**
-     * Returns the player of the current game.
+     * Label used to display the current point value.
+     */
+    @FXML
+    private Label pointLabel;
+
+    /**
+     * TextArea used to display the game summary, including won/lost games and messages.
+     */
+    @FXML
+    private TextArea summaryTextArea;
+
+    /**
+     * Initializes the controller after its root element has been completely processed.
+     * Creates a new instance of the Game model.
+     */
+    @FXML
+    public void initialize() {
+        game = new Game();
+    }
+
+    /**
+     * Gets the current player.
      *
      * @return the current player
      */
@@ -61,29 +69,26 @@ public class GameController {
     }
 
     /**
-     * Sets the player of the current game and starts a new match.
+     * Sets the current player and updates the nickname label.
      *
-     * @param currentPlayer the player who is going to play
+     * @param currentPlayer the player to set
      */
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
         nicknameLabel.setText(this.currentPlayer.getNickname());
-        startNewGame();
     }
 
     /**
-     * Handles the click on the "Lanzar" button: rolls both dice, applies the
-     * Craps rules and updates the view with the result.
+     * Handles the roll button click event. Rolls both dice, updates their images,
+     * processes the roll through the Game model, and updates the UI with the current
+     * roll, point, won/lost games count and game messages.
      *
-     * @param event the mouse event that triggered the action
+     * @param event The mouse event triggered by clicking the roll button.
      */
     @FXML
     void onMouseClickedDropButton(MouseEvent event) {
         Dice dice1 = new Dice();
-        Dice dice2 = new Dice();
-
         dice1.roll();
-        dice2.roll();
 
         dice1ImageView.setImage(
                 new Image(
@@ -93,6 +98,10 @@ public class GameController {
                 )
         );
 
+        // Create and roll dice 2
+        Dice dice2 = new Dice();
+        dice2.roll();
+
         dice2ImageView.setImage(
                 new Image(
                         getClass().getResourceAsStream(
@@ -101,80 +110,16 @@ public class GameController {
                 )
         );
 
-        int total = dice1.getValue() + dice2.getValue();
-        boolean hadPoint = game.isPointEstablished();
+        // Process the roll with the Game model
+        game.jugar(dice1, dice2);
 
-        Game.TurnResult result = game.play(total);
+        // Update UI with game data
+        dropLabel.setText(String.valueOf(game.getTiro()));
+        pointLabel.setText(String.valueOf(game.getPunto()));
 
-        updateScoreboard(total);
-        appendMessage(buildMessage(result, total, hadPoint));
-
-        if (result == Game.TurnResult.WIN || result == Game.TurnResult.LOSE) {
-            appendMessage("Nuevo juego: realiza tu tiro de salida.");
-        }
-    }
-
-    /**
-     * Resets the match state and the view for a new game session.
-     */
-    private void startNewGame() {
-        game.reset();
-        updateScoreboard(game.getLastRoll());
-        messageTextArea.clear();
-        appendMessage(
-                "Nuevo juego para " + currentPlayer.getNickname()
-                        + ". Realiza tu tiro de salida."
-        );
-    }
-
-    /**
-     * Updates the labels that show the state of the game.
-     *
-     * @param total total obtained in the last roll
-     */
-    private void updateScoreboard(int total) {
-        tiroLabel.setText(total == 0 ? EMPTY_VALUE : String.valueOf(total));
-        puntoLabel.setText(
-                game.isPointEstablished()
-                        ? String.valueOf(game.getPoint())
-                        : EMPTY_VALUE
-        );
-        wonGamesLabel.setText(String.valueOf(game.getWonGames()));
-        lostGamesLabel.setText(String.valueOf(game.getLostGames()));
-    }
-
-    /**
-     * Builds the message that describes the outcome of a turn.
-     *
-     * @param result   outcome returned by the game model
-     * @param total    total obtained in the last roll
-     * @param hadPoint whether a point was established before the roll
-     * @return the message to show to the player
-     */
-    private String buildMessage(Game.TurnResult result, int total, boolean hadPoint) {
-        switch (result) {
-            case WIN:
-                return hadPoint
-                        ? "¡Ganaste! Repetiste el punto con un " + total + "."
-                        : "¡Ganaste! Sacaste " + total + " en el tiro de salida.";
-            case LOSE:
-                return hadPoint
-                        ? "Sacaste 7 antes del punto. Perdiste."
-                        : "Craps: sacaste " + total + ". Perdiste.";
-            case POINT_ESTABLISHED:
-                return "Punto establecido: " + total + ".";
-            default:
-                return "Sacaste " + total + ". El punto sigue en "
-                        + game.getPoint() + ".";
-        }
-    }
-
-    /**
-     * Appends a line to the game log shown in the view.
-     *
-     * @param message message to append
-     */
-    private void appendMessage(String message) {
-        messageTextArea.appendText(message + System.lineSeparator());
+        String summary = "Games won: " + game.getJuegosGanados() + "\n" +
+                         "Games lost: " + game.getJuegosPerdidos() + "\n" +
+                         game.getMensaje();
+        summaryTextArea.setText(summary);
     }
 }
